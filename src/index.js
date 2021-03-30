@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Quiz from "./components/Quiz";
+import Quiz from "./Quiz";
 
 import "./styles.css";
 
