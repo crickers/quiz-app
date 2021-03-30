@@ -5,12 +5,10 @@ import Quiz from "./components/Quiz";
 import "./styles.css";
 
 function App() {
-  return (
-    <div className="App">
-      <Quiz />
-    </div>
-  );
+  return <div className="App">Welcome to WorldQuiz</div>;
 }
+
+export default App;
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App></App>, rootElement); //renders the component(first parameter) as a child of the element(second parameter)
