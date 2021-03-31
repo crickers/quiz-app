@@ -35,6 +35,8 @@ export class Quiz extends Component {
   nextQuestionHandler = () => {
     const { userAnswer, answer, score } = this.state;
 
+    //check for correct answer & increment score
+
     if (userAnswer === answer) {
       this.setstate({
         score: score + 1,
@@ -47,8 +49,41 @@ export class Quiz extends Component {
     });
   };
 
+  //if current index changes, question is set and options are disabled so user cannot choose a different answer
+  componentDidMount() {
+    this.loadQuiz();
+  }
+
+  checkAnswer = (answer) => {
+    this.setState({
+      userAnswer: answer,
+      disabled: false,
+    });
+  };
+
+  //if current index changes, question is set and options are disabled so user cannot choose a different answer
+  componentDidUpdate(prevProps, prevState) {
+    const { currentIndex } = this.state;
+    if (this.state.currentIndex !== prevState.currentIndex) {
+      this.setState(() => {
+        return {
+          disabled: true,
+          question: QuizData[currentIndex].question,
+          options: QuizData[currentIndex].options,
+          answer: QuizData[currentIndex].answer,
+        };
+      });
+    }
+  }
+
   render() {
-    return <div></div>;
+    const { question, options, currentIndex, userAnswer, quizEnd } = this.state;
+    return (
+      <div>
+        <h2>{question}</h2>
+        <span>{`Question ${currentIndex + 1} of ${QuizData.length}`}</span>
+      </div>
+    );
   }
 }
 

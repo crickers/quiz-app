@@ -5,7 +5,11 @@ import Quiz from "./Quiz";
 import "./styles.css";
 
 function App() {
-  return <div className="App">Welcome to WorldQuiz</div>;
+  return (
+    <div>
+      <Quiz></Quiz>
+    </div>
+  );
 }
 
 export default App;
