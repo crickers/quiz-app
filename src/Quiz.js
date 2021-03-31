@@ -9,18 +9,18 @@ export class Quiz extends Component {
     super(props);
 
     this.state = {
-      userAnswer: null,
-      currentIndex: 0,
-      options: [],
-      quizEnd: false,
-      score: 0,
-      disabled: true,
+      userAnswer: null, //user's current answer
+      currentIndex: 0, //current questions index
+      options: [], //the answer options
+      quizEnd: false, //determines if we are on the last question
+      score: 0, //score tracker
+      disabled: true, //determines the status of the buttons
     };
   }
   //return a single question from the quiz data
 
   loadQuiz = () => {
-    const { currentIndex } = this.state;
+    const { currentIndex } = this.state; //gets the current question index
     this.setState(() => {
       return {
         question: QuizData[currentIndex].question,
@@ -34,6 +34,9 @@ export class Quiz extends Component {
 
   nextQuestionHandler = () => {
     const { userAnswer, answer, score } = this.state;
+    this.setState({
+      currentIndex: this.state.currentIndex + 1,
+    });
 
     //check for correct answer & increment score
 
@@ -82,6 +85,25 @@ export class Quiz extends Component {
       <div>
         <h2>{question}</h2>
         <span>{`Question ${currentIndex + 1} of ${QuizData.length}`}</span>
+        {options.map((option) => (
+          <p
+            key={option.id}
+            className={`options ${userAnswer === option ? "selected" : null}`}
+            onClick={() => this.checkAnswer(option)}
+          >
+            {option}
+          </p>
+        ))}
+
+        {currentIndex < QuizData.length - 1 && (
+          <button disabled={this.state.disabled}>Next Question</button>
+        )}
+        {currentIndex === QuizData.length - 1 && (
+          <button
+            onClick={this.finishHandler}
+            disabled={this.state.disabled}
+          ></button>
+        )}
       </div>
     );
   }
