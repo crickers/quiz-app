@@ -83,6 +83,14 @@ export class Quiz extends Component {
     }
   }
 
+  finishHandler = () => {
+    if (this.state.currentIndex === QuizData.length - 1) {
+      this.setState({
+        quizEnd: true,
+      });
+    }
+  };
+
   render() {
     const { question, options, currentIndex, userAnswer, quizEnd } = this.state;
     return (
@@ -101,13 +109,17 @@ export class Quiz extends Component {
         ))}
 
         {currentIndex < QuizData.length - 1 && (
-          <button disabled={this.state.disabled}>Next Question</button>
+          <button
+            disabled={this.state.disabled}
+            onClick={this.nextQuestionHandler}
+          >
+            Next Question
+          </button>
         )}
         {currentIndex === QuizData.length - 1 && (
-          <button
-            onClick={this.finishHandler}
-            disabled={this.state.disabled}
-          ></button>
+          <button onClick={this.finishHandler} disabled={this.state.disabled}>
+            Finish
+          </button>
         )}
       </div>
     );
