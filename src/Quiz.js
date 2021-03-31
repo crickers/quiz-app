@@ -45,24 +45,28 @@ export class Quiz extends Component {
         score: score + 1,
       });
     }
-
-    this.setState({
-      currentIndex: this.state.currentIndex + 1,
-      userAnswer: null,
-    });
   };
 
-  //if current index changes, question is set and options are disabled so user cannot choose a different answer
-  componentDidMount() {
-    this.loadQuiz();
-  }
-
+  //check the answer
   checkAnswer = (answer) => {
     this.setState({
       userAnswer: answer,
       disabled: false,
     });
   };
+
+  finishHandler = () => {
+    if (this.state.currentIndex === QuizData.length - 1) {
+      this.setState({
+        quizEnd: true,
+      });
+    }
+  };
+
+  //if current index changes, question is set and options are disabled so user cannot choose a different answer
+  componentDidMount() {
+    this.loadQuiz();
+  }
 
   //if current index changes, question is set and options are disabled so user cannot choose a different answer
   componentDidUpdate(prevProps, prevState) {
@@ -85,6 +89,7 @@ export class Quiz extends Component {
       <div>
         <h2>{question}</h2>
         <span>{`Question ${currentIndex + 1} of ${QuizData.length}`}</span>
+        {/* map function displays list of items */}
         {options.map((option) => (
           <p
             key={option.id}
