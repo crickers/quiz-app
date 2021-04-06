@@ -31,22 +31,18 @@ export class Quiz extends Component {
   };
 
   //this function handles the click event for the next button
-
-  nextQuestionHandler = () => {
+  nextQuestionHander = () => {
     const { userAnswer, answer, score } = this.state;
     this.setState({
       currentIndex: this.state.currentIndex + 1,
     });
-
-    //check for correct answer & increment score
-
+    //Check if correct answer and increment score
     if (userAnswer === answer) {
-      this.setstate({
+      this.setState({
         score: score + 1,
       });
     }
   };
-
   //check the answer
   checkAnswer = (answer) => {
     this.setState({
@@ -92,32 +88,56 @@ export class Quiz extends Component {
   };
 
   render() {
-    const { question, options, currentIndex, userAnswer, quizEnd } = this.state;
+    const { question, options, currentIndex, userAnswer, quizEnd } = this.state; //get the current state
+
+    if (quizEnd) {
+      return (
+        <div>
+          <h1>Game Over. Final score is {this.state.score} points</h1>
+          <p>The correct Answers for the quiz are</p>
+          <ul>
+            {QuizData.map((item, index) => (
+              <li className="ui floating message options" key={index}>
+                {item.answer}
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
     return (
       <div>
         <h2>{question}</h2>
-        <span>{`Question ${currentIndex + 1} of ${QuizData.length}`}</span>
-        {/* map function displays list of items */}
-        {options.map((option) => (
+        <span>{`Question ${currentIndex} of ${QuizData.length - 1}`}</span>
+        {options.map((
+          option //for each option, new paragraph
+        ) => (
           <p
             key={option.id}
-            className={`options ${userAnswer === option ? "selected" : null}`}
+            className={`ui floating message options
+                ${userAnswer === option ? "selected" : null}
+                `}
             onClick={() => this.checkAnswer(option)}
           >
             {option}
           </p>
         ))}
-
         {currentIndex < QuizData.length - 1 && (
           <button
+            className="ui inverted button"
             disabled={this.state.disabled}
-            onClick={this.nextQuestionHandler}
+            onClick={this.nextQuestionHander}
           >
             Next Question
           </button>
         )}
         {currentIndex === QuizData.length - 1 && (
-          <button onClick={this.finishHandler} disabled={this.state.disabled}>
+          <button
+            className="ui inverted button"
+            disabled={this.state.disabled}
+            onClick={this.finishHandler}
+          >
             Finish
           </button>
         )}
@@ -125,5 +145,4 @@ export class Quiz extends Component {
     );
   }
 }
-
 export default Quiz;
