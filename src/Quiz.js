@@ -2,6 +2,32 @@ import React, { Component } from "react";
 import { QuizData } from "./QuizData";
 import "./styles.css";
 
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Dashboard from "./Dashboard";
+
+function Auth() {
+  return <h1>Authentication</h1>;
+}
+
+function App() {
+  return (
+    <Router>
+      <div>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+          <Route path="/">
+            <Auth />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
 export class Quiz extends Component {
   //prevent user from clicking button until an answer is selected
 
