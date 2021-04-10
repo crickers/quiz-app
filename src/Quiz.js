@@ -46,38 +46,54 @@ export class Quiz extends Component {
     this.loadQuiz();
   }
 
-//updates the component
-  compontentDidUpdate(prevProps, prevState){
-    const{currentIndex} = this.State;
-    if(this.state.currentIndex !== prevState.currentIndex){
+  checkAnswer = (answer) => {
+    this.setState({
+      userAnswer: answer,
+      disabled: false,
+    });
+  };
+
+  //updates the component
+  componentDidUpdate(prevProps, prevState) {
+    const { currentIndex } = this.state;
+    if (this.state.currentIndex !== prevState.currentIndex) {
       this.setState(() => {
         return {
           disabled: true,
           question: QuizData[currentIndex].question,
           options: QuizData[currentIndex].options,
           answer: QuizData[currentIndex].answer,
-        }
+        };
+      });
     }
   }
 
-
-
-  checkAnswer = answer => {  //picks answer & assigns it to userAnswer
+  checkAnswer = (answer) => {
+    //picks answer & assigns it to userAnswer
     this.setState({
-      userAnswer: answer
-      disabled: false //enables the Next button
+      userAnswer: answer,
+      disabled: false, //enables the Next button
     });
   };
 
-
-
   render() {
+    const { question, options, currentIndex, userAnswer, quizEnd } = this.state;
     return (
-    <div>
-    </div>;
-  
+      <div>
+        <h2>{question}</h2>
+        <span>{`Question ${currentIndex + 1} of ${QuizData.length}`}</span>
+        {options.map((option) => (
+          <p
+            key={option.id}
+            classNamme={`options ${userAnswer === option ? "selected" : null}`}
+            onClick={() => this.checkAnswer(option)}
+          >
+            {option}
+          </p>
+        ))}
+      </div>
+    );
   }
 }
 
-export default Quiz
-}
+export default Quiz;
