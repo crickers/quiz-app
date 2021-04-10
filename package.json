@@ -50,5 +50,8 @@
   "bugs": {
     "url": "https://github.com/crickers/quiz-app/issues"
   },
-  "homepage": "https://github.com/crickers/quiz-app#readme"
+  "homepage": "https://github.com/crickers/quiz-app#readme",
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
 }

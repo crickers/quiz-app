@@ -29,6 +29,7 @@ export class Quiz extends Component {
   nextQuestionHandler = () => {
     const { userAnswer, answer, score } = this.state;
 
+    //Check if correct answer and increment score
     if (userAnswer === answer) {
       this.setState({
         score: score + 1,
@@ -39,18 +40,44 @@ export class Quiz extends Component {
       currentIndex: this.state.currentIndex + 1,
       userAnswer: null,
     });
-
-    //Check if correct answer and increment score
-    if (userAnswer === answer) {
-      this.setState({
-        score: score + 1,
-      });
-    }
   };
 
+  componentDidMount() {
+    this.loadQuiz();
+  }
+
+//updates the component
+  compontentDidUpdate(prevProps, prevState){
+    const{currentIndex} = this.State;
+    if(this.state.currentIndex !== prevState.currentIndex){
+      this.setState(() => {
+        return {
+          disabled: true,
+          question: QuizData[currentIndex].question,
+          options: QuizData[currentIndex].options,
+          answer: QuizData[currentIndex].answer,
+        }
+    }
+  }
+
+
+
+  checkAnswer = answer => {  //picks answer & assigns it to userAnswer
+    this.setState({
+      userAnswer: answer
+      disabled: false //enables the Next button
+    });
+  };
+
+
+
   render() {
-    return <div></div>;
+    return (
+    <div>
+    </div>;
+  
   }
 }
 
-export default Quiz;
+export default Quiz
+}
